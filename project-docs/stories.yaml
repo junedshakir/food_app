@@ -1,0 +1,560 @@
+# stories.yaml — single source of truth for story state.
+# Lifecycle: ready-for-dev -> in-progress -> review -> done
+#   in-progress : set when the feature branch for the story is created
+#   review      : set when the PR is opened
+#   done        : set after review, issue resolution and merge
+# Story IDs are <epic>.<index> (e.g. 1.1). `legacy_id` maps to the numbering in user-stories.md.
+# `story_file` is null until the story file is created (done on request, epic by epic).
+
+statuses: [ready-for-dev, in-progress, review, done]
+
+epics:
+  - { id: 1, name: Project Foundation }
+  - { id: 2, name: Authentication & Accounts }
+  - { id: 3, name: Restaurant Onboarding & Admin Approval }
+  - { id: 4, name: Menu Management }
+  - { id: 5, name: Discovery }
+  - { id: 6, name: Cart & Addresses }
+  - { id: 7, name: Checkout & Payments }
+  - { id: 8, name: Order Fulfilment & Tracking }
+  - { id: 9, name: Admin Oversight }
+  - { id: 10, name: Hardening & Release }
+
+stories:
+  # ---------- Epic 1 — Project Foundation ----------
+  - id: "1.1"
+    legacy_id: US-01
+    epic: 1
+    title: Project scaffolding
+    priority: P0
+    size: L
+    depends_on: []
+    status: in-progress
+    branch: feature/project-scaffolding
+    pr: null
+    story_file: stories/story-us-1.1-project-scaffolding.md
+    manual_steps: false
+    as_a: developer
+    i_want: a clean Next.js project with the agreed tooling and folder structure
+    so_that: every later story builds on a consistent, working base
+
+  - id: "1.2"
+    legacy_id: US-02
+    epic: 1
+    title: Core infrastructure
+    priority: P0
+    size: M
+    depends_on: ["1.1"]
+    status: ready-for-dev
+    branch: null
+    pr: null
+    story_file: stories/story-us-1.2-core-infrastructure.md
+    manual_steps: true # MongoDB Atlas M0 cluster and connection string
+    as_a: developer
+    i_want: shared infrastructure for config, database, errors, logging and API responses
+    so_that: every feature reuses the same proven patterns
+
+  - id: "1.3"
+    legacy_id: US-03
+    epic: 1
+    title: CI pipeline and first deploy
+    priority: P0
+    size: S
+    depends_on: ["1.2"]
+    status: ready-for-dev
+    branch: null
+    pr: null
+    story_file: stories/story-us-1.3-ci-pipeline-and-first-deploy.md
+    manual_steps: true # GitHub repo, Vercel Hobby account
+    as_a: developer
+    i_want: automated checks on every change and a deployed URL from day one
+    so_that: regressions are caught early and the app is always demonstrable
+
+  # ---------- Epic 2 — Authentication & Accounts ----------
+  - id: "2.1"
+    legacy_id: US-04
+    epic: 2
+    title: Firebase setup and login/registration
+    priority: P0
+    size: L
+    depends_on: ["1.2"]
+    status: ready-for-dev
+    branch: null
+    pr: null
+    story_file: null
+    manual_steps: true # Firebase project and keys
+    as_a: visitor
+    i_want: to register and log in with email and password
+    so_that: I can use personalised features
+
+  - id: "2.2"
+    legacy_id: US-05
+    epic: 2
+    title: User sync and role-based access control
+    priority: P0
+    size: L
+    depends_on: ["2.1"]
+    status: ready-for-dev
+    branch: null
+    pr: null
+    story_file: null
+    manual_steps: false
+    as_a: system
+    i_want: every authenticated user mapped to a MongoDB user with a role
+    so_that: access can be enforced on the server
+
+  - id: "2.3"
+    legacy_id: US-06
+    epic: 2
+    title: Password reset
+    priority: P0
+    size: S
+    depends_on: ["2.1"]
+    status: ready-for-dev
+    branch: null
+    pr: null
+    story_file: null
+    manual_steps: false
+    as_a: user
+    i_want: to reset my password via email
+    so_that: I can recover my account
+
+  - id: "2.4"
+    legacy_id: US-07
+    epic: 2
+    title: Google sign-in
+    priority: P1
+    size: S
+    depends_on: ["2.2"]
+    status: ready-for-dev
+    branch: null
+    pr: null
+    story_file: null
+    manual_steps: false
+    as_a: visitor
+    i_want: to continue with Google
+    so_that: I can sign up faster
+
+  - id: "2.5"
+    legacy_id: US-08
+    epic: 2
+    title: Profile management
+    priority: P0
+    size: S
+    depends_on: ["2.2"]
+    status: ready-for-dev
+    branch: null
+    pr: null
+    story_file: null
+    manual_steps: false
+    as_a: user
+    i_want: to view and edit my name and phone
+    so_that: my orders have correct contact details
+
+  # ---------- Epic 3 — Restaurant Onboarding & Admin Approval ----------
+  - id: "3.1"
+    legacy_id: US-09
+    epic: 3
+    title: Owner self-registration
+    priority: P0
+    size: M
+    depends_on: ["2.2"]
+    status: ready-for-dev
+    branch: null
+    pr: null
+    story_file: null
+    manual_steps: false
+    as_a: restaurant owner
+    i_want: to sign up as a partner and register my restaurant
+    so_that: I can start selling
+
+  - id: "3.2"
+    legacy_id: US-10
+    epic: 3
+    title: Admin bootstrap and restaurant approval
+    priority: P0
+    size: M
+    depends_on: ["3.1"]
+    status: ready-for-dev
+    branch: null
+    pr: null
+    story_file: null
+    manual_steps: false
+    as_a: admin
+    i_want: to review and decide on restaurant registrations
+    so_that: only valid restaurants go live
+
+  - id: "3.3"
+    legacy_id: US-11
+    epic: 3
+    title: Restaurant profile and open/closed toggle
+    priority: P0
+    size: M
+    depends_on: ["3.1"]
+    status: ready-for-dev
+    branch: null
+    pr: null
+    story_file: null
+    manual_steps: false
+    as_a: owner
+    i_want: to edit my restaurant profile and toggle open/closed
+    so_that: customers see accurate information
+
+  # ---------- Epic 4 — Menu Management ----------
+  - id: "4.1"
+    legacy_id: US-12
+    epic: 4
+    title: Image upload with Cloudinary
+    priority: P0
+    size: M
+    depends_on: ["3.3"]
+    status: ready-for-dev
+    branch: null
+    pr: null
+    story_file: null
+    manual_steps: true # Cloudinary free account and credentials
+    as_a: owner
+    i_want: to upload images
+    so_that: my restaurant and dishes look appealing
+
+  - id: "4.2"
+    legacy_id: US-13
+    epic: 4
+    title: Menu categories
+    priority: P0
+    size: S
+    depends_on: ["3.3"]
+    status: ready-for-dev
+    branch: null
+    pr: null
+    story_file: null
+    manual_steps: false
+    as_a: owner
+    i_want: to manage menu categories
+    so_that: dishes are organised
+
+  - id: "4.3"
+    legacy_id: US-14
+    epic: 4
+    title: Dish management
+    priority: P0
+    size: L
+    depends_on: ["4.1", "4.2"]
+    status: ready-for-dev
+    branch: null
+    pr: null
+    story_file: null
+    manual_steps: false
+    as_a: owner
+    i_want: to add and edit dishes
+    so_that: customers can order them
+
+  - id: "4.4"
+    legacy_id: US-15
+    epic: 4
+    title: Seed data script
+    priority: P0
+    size: S
+    depends_on: ["4.3"]
+    status: ready-for-dev
+    branch: null
+    pr: null
+    story_file: null
+    manual_steps: false
+    as_a: developer
+    i_want: realistic sample data
+    so_that: discovery and ordering can be built and demoed
+
+  # ---------- Epic 5 — Discovery ----------
+  - id: "5.1"
+    legacy_id: US-16
+    epic: 5
+    title: Restaurant listing (home)
+    priority: P0
+    size: M
+    depends_on: ["4.4"]
+    status: ready-for-dev
+    branch: null
+    pr: null
+    story_file: null
+    manual_steps: false
+    as_a: guest or customer
+    i_want: to see active restaurants
+    so_that: I can choose where to order
+
+  - id: "5.2"
+    legacy_id: US-17
+    epic: 5
+    title: Search, filter and sort
+    priority: P0
+    size: M
+    depends_on: ["5.1"]
+    status: ready-for-dev
+    branch: null
+    pr: null
+    story_file: null
+    manual_steps: false
+    as_a: customer
+    i_want: to search and filter restaurants
+    so_that: I find what I like quickly
+
+  - id: "5.3"
+    legacy_id: US-18
+    epic: 5
+    title: Restaurant detail and menu
+    priority: P0
+    size: M
+    depends_on: ["5.1"]
+    status: ready-for-dev
+    branch: null
+    pr: null
+    story_file: null
+    manual_steps: false
+    as_a: customer
+    i_want: to view a restaurant's menu
+    so_that: I can pick dishes
+
+  - id: "5.4"
+    legacy_id: US-19
+    epic: 5
+    title: Responsive layout and navigation polish
+    priority: P0
+    size: S
+    depends_on: ["5.3"]
+    status: ready-for-dev
+    branch: null
+    pr: null
+    story_file: null
+    manual_steps: false
+    as_a: customer on a phone
+    i_want: a clean mobile layout
+    so_that: browsing is comfortable
+
+  # ---------- Epic 6 — Cart & Addresses ----------
+  - id: "6.1"
+    legacy_id: US-20
+    epic: 6
+    title: Addresses
+    priority: P0
+    size: M
+    depends_on: ["2.2"]
+    status: ready-for-dev
+    branch: null
+    pr: null
+    story_file: null
+    manual_steps: false
+    as_a: customer
+    i_want: to save delivery addresses
+    so_that: checkout is quick
+
+  - id: "6.2"
+    legacy_id: US-21
+    epic: 6
+    title: Multi-restaurant cart
+    priority: P0
+    size: L
+    depends_on: ["5.3", "2.2"]
+    status: ready-for-dev
+    branch: null
+    pr: null
+    story_file: null
+    manual_steps: false
+    as_a: customer
+    i_want: to add dishes from one or more restaurants to my cart
+    so_that: I can order what I want in one go
+
+  - id: "6.3"
+    legacy_id: US-22
+    epic: 6
+    title: Guest cart merge
+    priority: P1
+    size: S
+    depends_on: ["6.2"]
+    status: ready-for-dev
+    branch: null
+    pr: null
+    story_file: null
+    manual_steps: false
+    as_a: guest
+    i_want: my cart kept when I log in
+    so_that: I don't lose my selections
+
+  # ---------- Epic 7 — Checkout & Payments ----------
+  - id: "7.1"
+    legacy_id: US-23
+    epic: 7
+    title: Checkout and order placement
+    priority: P0
+    size: L
+    depends_on: ["6.1", "6.2"]
+    status: ready-for-dev
+    branch: null
+    pr: null
+    story_file: null
+    manual_steps: false
+    as_a: customer
+    i_want: to review and place my order
+    so_that: restaurants start preparing it
+
+  - id: "7.2"
+    legacy_id: US-24
+    epic: 7
+    title: Razorpay test-mode payment
+    priority: P0
+    size: L
+    depends_on: ["7.1"]
+    status: ready-for-dev
+    branch: null
+    pr: null
+    story_file: null
+    manual_steps: true # Razorpay test-mode keys and webhook secret
+    as_a: customer
+    i_want: to pay online
+    so_that: my order is confirmed without cash
+
+  - id: "7.3"
+    legacy_id: US-25
+    epic: 7
+    title: Customer order history and detail
+    priority: P0
+    size: M
+    depends_on: ["7.2"]
+    status: ready-for-dev
+    branch: null
+    pr: null
+    story_file: null
+    manual_steps: false
+    as_a: customer
+    i_want: to see my past and current orders
+    so_that: I can review them
+
+  # ---------- Epic 8 — Order Fulfilment & Tracking ----------
+  - id: "8.1"
+    legacy_id: US-26
+    epic: 8
+    title: Owner incoming orders
+    priority: P0
+    size: M
+    depends_on: ["7.2"]
+    status: ready-for-dev
+    branch: null
+    pr: null
+    story_file: null
+    manual_steps: false
+    as_a: owner
+    i_want: to see new orders as they arrive
+    so_that: I can act quickly
+
+  - id: "8.2"
+    legacy_id: US-27
+    epic: 8
+    title: Owner order status updates
+    priority: P0
+    size: M
+    depends_on: ["8.1"]
+    status: ready-for-dev
+    branch: null
+    pr: null
+    story_file: null
+    manual_steps: false
+    as_a: owner
+    i_want: to accept, reject and advance orders
+    so_that: customers see progress
+
+  - id: "8.3"
+    legacy_id: US-28
+    epic: 8
+    title: Customer tracking page
+    priority: P0
+    size: M
+    depends_on: ["8.2"]
+    status: ready-for-dev
+    branch: null
+    pr: null
+    story_file: null
+    manual_steps: false
+    as_a: customer
+    i_want: live order status
+    so_that: I know when my food will arrive
+
+  - id: "8.4"
+    legacy_id: US-29
+    epic: 8
+    title: Customer cancellation
+    priority: P0
+    size: S
+    depends_on: ["8.2"]
+    status: ready-for-dev
+    branch: null
+    pr: null
+    story_file: null
+    manual_steps: false
+    as_a: customer
+    i_want: to cancel an order before it is accepted
+    so_that: I'm not charged for something I no longer want
+
+  # ---------- Epic 9 — Admin Oversight ----------
+  - id: "9.1"
+    legacy_id: US-30
+    epic: 9
+    title: Admin users, orders and dashboard
+    priority: P0
+    size: M
+    depends_on: ["8.2"]
+    status: ready-for-dev
+    branch: null
+    pr: null
+    story_file: null
+    manual_steps: false
+    as_a: admin
+    i_want: visibility across the platform
+    so_that: I can monitor and support it
+
+  # ---------- Epic 10 — Hardening & Release ----------
+  - id: "10.1"
+    legacy_id: US-31
+    epic: 10
+    title: Security hardening
+    priority: P0
+    size: M
+    depends_on: ["9.1"]
+    status: ready-for-dev
+    branch: null
+    pr: null
+    story_file: null
+    manual_steps: false
+    as_a: product owner
+    i_want: the app hardened against common threats
+    so_that: user data and payments are protected
+
+  - id: "10.2"
+    legacy_id: US-32
+    epic: 10
+    title: Test suite and E2E flows
+    priority: P0
+    size: L
+    depends_on: ["9.1"]
+    status: ready-for-dev
+    branch: null
+    pr: null
+    story_file: null
+    manual_steps: false
+    as_a: developer
+    i_want: reliable unit, integration and end-to-end tests
+    so_that: regressions are caught before release
+
+  - id: "10.3"
+    legacy_id: US-33
+    epic: 10
+    title: Performance, accessibility and go-live checklist
+    priority: P0
+    size: M
+    depends_on: ["10.1", "10.2"]
+    status: ready-for-dev
+    branch: null
+    pr: null
+    story_file: null
+    manual_steps: false
+    as_a: product owner
+    i_want: the app verified for performance, accessibility and readiness
+    so_that: it can be launched with confidence
