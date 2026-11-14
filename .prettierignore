@@ -1,0 +1,8 @@
+node_modules
+.next
+package-lock.json
+src/components/ui
+my-docs
+project-docs
+CLAUDE.md
+README.md
